@@ -1,11 +1,13 @@
 package com.tdd;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -19,21 +21,39 @@ public class HandsTest {
     @Mock WinningHands winningHands;
     @Mock RankEvaluator rankEvaluator;
     @Mock RankIdentifier identifier;
+    private List<Hand> handList = new ArrayList<>();
+    @Mock HandToRankMapper handToRankMapper;
+    private List<Rank> rankList = new ArrayList<>();
+
+
+    @Before
+    public void configureHands() {
+        when(handToRankMapper.map(handList)).thenReturn(rankList);
+        when(rankEvaluator.evaluate(rankList)).thenReturn(winningHands);
+        when(rankEvaluator.evaluate(rankList)).thenReturn(winningHands);
+    }
 
     @Test
-    public void evaluateRanksEachHand() throws Exception {
-        Hands hands = new Hands(Arrays.asList(hand1, hand2), rankEvaluator, identifier);
+    public void mapsHandsToRanks() {
+        Hands hands = new Hands(handList, rankEvaluator, handToRankMapper);
 
         hands.evaluate();
 
-        verify(hand1).rank(rankEvaluator, identifier);
-        verify(hand2).rank(rankEvaluator, identifier);
+        verify(handToRankMapper).map(handList);
+    }
+
+    @Test
+    public void evaluateRanksEachHand() throws Exception {
+        Hands hands = new Hands(handList, rankEvaluator, handToRankMapper);
+
+        hands.evaluate();
+
+        rankEvaluator.evaluate(rankList);
     }
 
     @Test
     public void tellRankEvaluatorToEvaluate() throws Exception {
-        when(rankEvaluator.evaluate()).thenReturn(winningHands);
-        Hands hands = new Hands(Arrays.asList(hand1, hand2), rankEvaluator, identifier);
+        Hands hands = new Hands(handList, rankEvaluator, handToRankMapper);
 
         WinningHands result = hands.evaluate();
 

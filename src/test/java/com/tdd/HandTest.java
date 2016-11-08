@@ -2,8 +2,6 @@ package com.tdd;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class HandTest {
 
     private RankEvaluator evaluator;
@@ -13,7 +11,7 @@ public class HandTest {
     public void identifiesRank() throws Exception {
         Hand hand = new Hand();
 
-        hand.rank(evaluator, identifier);
+        hand.rank(identifier);
 
     }
 }

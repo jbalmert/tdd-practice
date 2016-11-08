@@ -5,17 +5,16 @@ import java.util.List;
 public class Hands {
     private List<Hand> hands;
     private RankEvaluator rankEvaluator;
-    private RankIdentifier identifier;
+    private HandToRankMapper handToRankMapper;
 
-    public Hands(List<Hand> hands, RankEvaluator rankEvaluator, RankIdentifier identifier) {
+    public Hands(List<Hand> hands, RankEvaluator rankEvaluator, HandToRankMapper handToRankMapper) {
         this.hands = hands;
         this.rankEvaluator = rankEvaluator;
-        this.identifier = identifier;
+        this.handToRankMapper = handToRankMapper;
     }
 
     public WinningHands evaluate() {
-        hands.forEach(hand -> hand.rank(rankEvaluator, identifier));
-        hands.forEach(hand -> hand.rank(rankEvaluator, identifier));
-        return rankEvaluator.evaluate();
+        List<Rank> rankList= handToRankMapper.map(hands);
+        return rankEvaluator.evaluate(rankList);
     }
 }
