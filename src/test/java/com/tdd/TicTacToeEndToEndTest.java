@@ -16,10 +16,11 @@ public class TicTacToeEndToEndTest {
     PrintStream printer;
     private GameBoard board = new GameBoard();
     private TurnTracker turnTracker = new TurnTracker();
+    private GameEvaluator gameEvaluator = new GameEvaluator();
 
     @Test
     public void playerXWins() throws Exception {
-        Game game = new Game(board, turnTracker);
+        Game game = new Game(board, turnTracker, gameEvaluator);
 
         game.move(1);
         game.move(5);
@@ -28,6 +29,5 @@ public class TicTacToeEndToEndTest {
         game.move(3);
 
         verify(printer).println("Player X wins");
-
     }
 }
