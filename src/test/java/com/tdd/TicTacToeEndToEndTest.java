@@ -15,10 +15,11 @@ public class TicTacToeEndToEndTest {
     @Mock
     PrintStream printer;
     private GameBoard board = new GameBoard();
+    private TurnTracker turnTracker = new TurnTracker();
 
     @Test
     public void playerXWins() throws Exception {
-        Game game = new Game(board);
+        Game game = new Game(board, turnTracker);
 
         game.move(1);
         game.move(5);
