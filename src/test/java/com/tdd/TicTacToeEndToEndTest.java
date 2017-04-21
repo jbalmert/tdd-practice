@@ -14,10 +14,11 @@ public class TicTacToeEndToEndTest {
 
     @Mock
     PrintStream printer;
+    private GameBoard board = new GameBoard();
 
     @Test
     public void playerXWins() throws Exception {
-        Game game = new Game();
+        Game game = new Game(board);
 
         game.move(1);
         game.move(5);
