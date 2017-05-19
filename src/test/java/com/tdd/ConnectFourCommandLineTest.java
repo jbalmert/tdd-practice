@@ -6,25 +6,24 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.BufferedReader;
-import java.io.PrintStream;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ConnectFourEndToEndTest {
+public class ConnectFourCommandLineTest {
 
     @Mock BufferedReader input;
-    @Mock PrintStream output;
-    private ConnectFourGame connectFourGame = new ConnectFourGame();
+    @Mock ConnectFourGame connectFourGame;
 
     @Test
-    public void player1PlacesMarkerInColumn() throws Exception {
+    public void sendsRequestedMoveToGame() throws Exception {
         when(input.readLine()).thenReturn("3");
         ConnectFourCommandLine cli = new ConnectFourCommandLine(input, connectFourGame);
 
         cli.acceptNextMove();
 
-        verify(output).println("P1,3,0");
+        verify(connectFourGame).placeMoveInColumn(3);
     }
 }
