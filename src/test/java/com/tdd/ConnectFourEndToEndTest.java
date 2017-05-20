@@ -16,7 +16,8 @@ public class ConnectFourEndToEndTest {
 
     @Mock BufferedReader input;
     @Mock PrintStream output;
-    private ConnectFourGame connectFourGame = new ConnectFourGame();
+    private Display display = new Display();
+    private ConnectFourGame connectFourGame = new ConnectFourGame(display);
 
     @Test
     public void player1PlacesMarkerInColumn() throws Exception {
